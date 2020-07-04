@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="26-cpp-多态">
+<meta property="og:url" content="http://yoursite.com/2020/02/17/26-cpp-%E5%A4%9A%E6%80%81/index.html">
+<meta property="og:site_name" content="simonXi的技术博客">
+<meta property="og:description" content="前言">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-17T12:12:04.000Z">
+<meta property="article:modified_time" content="2020-07-04T04:20:41.987Z">
+<meta property="article:author" content="simonXi">
+<meta property="article:tag" content="cpp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/17/26-cpp-%E5%A4%9A%E6%80%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>26-cpp-多态 | simonXi的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">simonXi的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/simonXi-tech" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/17/26-cpp-%E5%A4%9A%E6%80%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="simonXi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="simonXi的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          26-cpp-多态
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-17 20:12:04" itemprop="dateCreated datePublished" datetime="2020-02-17T20:12:04+08:00">2020-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-04 12:20:41" itemprop="dateModified" datetime="2020-07-04T12:20:41+08:00">2020-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/cpp/" itemprop="url" rel="index"><span itemprop="name">cpp</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><a id="more"></a>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><ol>
+<li>联编就是一个程序模块、代码互相关联的过程。</li>
+<li>多态存在的意义就是：当父类指针/引用指向父类对象时，调用父类的函数；当父类指针/引用指向子类对象，调用子类重写的同名函数。即同样的调用语句有多种不同的表现形态。</li>
+<li>实际在编译过程中，编译器会自动根据指针的类型判断指向的时一个什么样的对象，所以编译器认为父类指针指向的父类对象。如果没有virtual关键字进行限定，<br>父类指针调用的永远是父类对象中成员函数。这种特性叫做静态联编。</li>
+<li>为了使多态成立，需要将程序联编推迟到运行时进行，成为动态联编。</li>
+<li>父类对象和子类对象的指针++步长不同，所以不要用父类指针++的方式操作子类数组。</li>
+</ol>
+<h2 id="多态的成立条件"><a href="#多态的成立条件" class="headerlink" title="多态的成立条件"></a>多态的成立条件</h2><ol>
+<li>要有继承</li>
+<li>要有函数重写</li>
+<li>要有父类指针/引用指向子类对象</li>
+</ol>
+<ul>
+<li>polyCondition.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Parent::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 继承</span><br><span class="line">class Child : public Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    &#x2F;&#x2F; 函数重写</span><br><span class="line">    virtual void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Child::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 父类指针指向子类对象</span><br><span class="line">void run(Parent* p)</span><br><span class="line">&#123;</span><br><span class="line">    p-&gt;func();     &#x2F;&#x2F; 有virtual关键字,多态</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    Parent p &#x3D; Parent();</span><br><span class="line">    Child c &#x3D; Child();</span><br><span class="line">    c.Parent::func();</span><br><span class="line"></span><br><span class="line">    run(&amp;p);</span><br><span class="line">    run(&amp;c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多态的实现原理"><a href="#多态的实现原理" class="headerlink" title="多态的实现原理"></a>多态的实现原理</h2><ol>
+<li>当类中声明虚函数时，编译器会在类中生成一个虚函数表。</li>
+<li>虚函数表是一个存储类成员函数指针的数据结构，virtual成员函数会被编译器放入虚函数表中。</li>
+<li>虚函数表由编译器自动生成与维护。当存在虚函数时，每个对象都有一个指向虚函数表的指针，称为vptr指针。</li>
+<li>在实现多态的过程中，父类和子类都有vptr指针。父类对象的vptr指针指向父类虚函数表，子类对象vptr指针指向子类虚函数表。</li>
+<li>在对象创建时，如果对象中存在虚函数，编译器就会在对象中建立虚函数表，并用vptr指针指向这个虚函数表。</li>
+<li>只有对象构造完成，vptr指针的指向才最终确定。</li>
+</ol>
+<ul>
+<li>verifyVptr.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Test</span><br><span class="line">&#123;</span><br><span class="line">    int t;</span><br><span class="line">public:</span><br><span class="line">    void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Test::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;t &#x3D; &quot; &lt;&lt; t &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class VirtualTest</span><br><span class="line">&#123;</span><br><span class="line">    int t;</span><br><span class="line">public:</span><br><span class="line">    virtual void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;VirtualTest::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void print()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;t &#x3D; &quot; &lt;&lt; t &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 加virtual关键字会加一个指向虚函数表的指针</span><br><span class="line">    cout &lt;&lt; &quot;sizeof(Test) &#x3D; &quot; &lt;&lt; sizeof(Test) &lt;&lt; endl;          &#x2F;&#x2F; 4</span><br><span class="line">    cout &lt;&lt; &quot;sizeof(VirtualTest) &#x3D; &quot; &lt;&lt; sizeof(VirtualTest) &lt;&lt; endl;    &#x2F;&#x2F; 8</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在执行过程中，编译器首先确定函数是否为虚函数，如果不是虚函数，编译器直接确定被调用的成员函数。<br>如果函数是虚函数，编译器根据传入对象的vptr指针，找到对应的虚函数表，找到对象对应的虚函数并调用。<br>所以父类指针不需要确定传入对象是子类对象还是父类对象。<br>当将函数声明为虚函数时，需要通过寻址操作找到真正应该调用的函数，所以虚函数的效率比普通函数低。<br>即可以将类中所有成员函数都声明为虚函数，但是没有必要。</p>
+<h2 id="vptr指针分布初始化"><a href="#vptr指针分布初始化" class="headerlink" title="vptr指针分布初始化"></a>vptr指针分布初始化</h2><p>对象在创建中，编译器对vptr指针进行初始化。只有当对象构造完全结束后vptr指针的指向才最终确定。<br>在构建子类对象时，会先构造父类对象，此时在父类对象中调用虚函数，指向父类的虚函数。构造完父类对象，<br>此时子类对象调用虚函数，指向子类的虚函数。</p>
+<ul>
+<li>vptr.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Parent()</span><br><span class="line">    &#123;</span><br><span class="line">        func();</span><br><span class="line">        cout &lt;&lt; &quot;Parent()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Parent::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Child : public Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Child()</span><br><span class="line">    &#123;</span><br><span class="line">        func();</span><br><span class="line">        cout &lt;&lt; &quot;Child()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void func()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Child::func()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 定义子类对象时,vptr指针先指向父类的虚函数表,在父类构造完成之后</span><br><span class="line">    &#x2F;&#x2F; 子类的vptr才指向自己的虚函数表</span><br><span class="line">    Child c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><p>普通析构函数在删除动态派生类对象会出现析构不彻底的现象。虚析构函数用于指引 delete 运算符正确析构动态对象。</p>
+<ul>
+<li>normalDestructor.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ~Base()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Base destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Parent : public Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ~Parent()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Parent destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Child : public Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ~Child()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Child destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    Child* pc &#x3D; new Child();</span><br><span class="line">    delete pc;</span><br><span class="line">    cout &lt;&lt; &quot;Child* pc&quot; &lt;&lt; endl;  &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line"></span><br><span class="line">    Parent* pp &#x3D; new Child();</span><br><span class="line">    delete pp;</span><br><span class="line">    cout &lt;&lt; &quot;Parent* pp&quot; &lt;&lt; endl; &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数</span><br><span class="line"></span><br><span class="line">    Base* pb &#x3D; new Child();</span><br><span class="line">    delete pb;</span><br><span class="line">    cout &lt;&lt; &quot;Base* pb&quot; &lt;&lt; endl;   &#x2F;&#x2F; 只调用Base的析构函数</span><br><span class="line"></span><br><span class="line">    Child c;  &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>virutualDestructor.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual ~Base()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Base destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Parent : public Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual ~Parent()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Parent destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Child : public Parent</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual ~Child()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Child destructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    Child* pc &#x3D; new Child();</span><br><span class="line">    delete pc;    &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line">    cout &lt;&lt; &quot;Child* pc&quot; &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Parent* pp &#x3D; new Child();</span><br><span class="line">    delete pp;    &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line">    cout &lt;&lt; &quot;Parent* pp&quot; &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Base* pb &#x3D; new Child();</span><br><span class="line">    delete pb;    &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line">    cout &lt;&lt; &quot;Base* pb&quot; &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Child c;      &#x2F;&#x2F; 调用Base的析构函数&#x2F;Parent析构函数&#x2F;Child析构函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="纯虚函数和抽象类"><a href="#纯虚函数和抽象类" class="headerlink" title="纯虚函数和抽象类"></a>纯虚函数和抽象类</h1><p>纯虚函数是一个在基类中说明的虚函数，在基类中没有定义，要求派生类必须实现纯虚函数。<br>纯虚函数形式：<br>  virtual 类型 函数名(参数表)=0;<br>在C++中没有接口的概念，纯虚函数就类似于Java的接口。Java派生类可以继承多个接口，不允许继承多个类。<br>C++中可以继承多个接口，也可以继承多个类，但是继承多个类会产生”钻石问题”，故C++摈弃继承多个类这种理念。<br>在C++中具有纯虚函数的基类称为抽象类。</p>
+<ul>
+<li>abstractClass.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 抽象类</span><br><span class="line">class Figure</span><br><span class="line">&#123;</span><br><span class="line">protected:</span><br><span class="line">    double x, y;</span><br><span class="line">public:</span><br><span class="line">    void setDim(double i, double j&#x3D;0)</span><br><span class="line">    &#123;</span><br><span class="line">        this-&gt;x &#x3D; i;</span><br><span class="line">        this-&gt;y &#x3D; j;</span><br><span class="line">    &#125;</span><br><span class="line">    virtual void showArea() &#x3D; 0;    &#x2F;&#x2F; 纯虚函数</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Triangle : public Figure</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void showArea()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Triangle Area &#x3D; &quot; &lt;&lt; 0.5*x*y &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Square : public Figure</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void showArea()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Triangle Area &#x3D; &quot; &lt;&lt; x*y &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Circle : public Figure</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void showArea()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Circle Area &#x3D; &quot; &lt;&lt; 3.14*x*x &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    Figure* pf;   &#x2F;&#x2F; 抽象类可以定义指针&#x2F;引用,不可以定义对象</span><br><span class="line">    Triangle t;</span><br><span class="line">    Square s;</span><br><span class="line">    Circle c;</span><br><span class="line"></span><br><span class="line">    pf &#x3D; &amp;t;</span><br><span class="line">    pf-&gt;setDim(10.0, 6.0);</span><br><span class="line">    pf-&gt;showArea();</span><br><span class="line"></span><br><span class="line">    pf &#x3D; &amp;s;</span><br><span class="line">    pf-&gt;setDim(10.0, 6.0);</span><br><span class="line">    pf-&gt;showArea();</span><br><span class="line"></span><br><span class="line">    pf &#x3D; &amp;c;</span><br><span class="line">    pf-&gt;setDim(10.0, 6.0);</span><br><span class="line">    pf-&gt;showArea();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象类模拟接口"><a href="#抽象类模拟接口" class="headerlink" title="抽象类模拟接口"></a>抽象类模拟接口</h2><p>接口就是可以看作只有纯虚函数的类。在C++和Java中继承多个接口都是可以的。</p>
+<ul>
+<li>interface.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class interface1</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void print() &#x3D; 0;</span><br><span class="line">    virtual int add(int a, int b) &#x3D; 0;</span><br><span class="line">&#x2F;&#x2F;    virtual int add(int a, int b, int c) &#x3D; 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class interface2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    virtual void print() &#x3D; 0;</span><br><span class="line">    virtual int add(int a, int b) &#x3D; 0;</span><br><span class="line">    virtual int minus(int a, int b) &#x3D; 0;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Child : public interface1, interface2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void print()</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Child::print()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 重载不以返回值为标准</span><br><span class="line">&#x2F;&#x2F;    void add(int a, int b)</span><br><span class="line">&#x2F;&#x2F;    &#123;</span><br><span class="line">&#x2F;&#x2F;        return a+b;</span><br><span class="line">&#x2F;&#x2F;    &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;    int add(int a, int b, int c)</span><br><span class="line">&#x2F;&#x2F;    &#123;</span><br><span class="line">&#x2F;&#x2F;        return a+b;</span><br><span class="line">&#x2F;&#x2F;    &#125;</span><br><span class="line"></span><br><span class="line">    int add(int a, int b)</span><br><span class="line">    &#123;</span><br><span class="line">        return a+b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int minus(int a, int b)</span><br><span class="line">    &#123;</span><br><span class="line">        return a-b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    Child c;</span><br><span class="line">    c.print();</span><br><span class="line">    cout &lt;&lt; c.add(1, 1) &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; c.minus(1, 1) &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当多继承出现”钻石模型”时，可以使用virtual关键字避免二义性问题。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>面向接口编程时项目开发中非常重要的技能。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>打赏，你怕了么(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="simonXi 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="simonXi 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/cpp/" rel="tag"><i class="fa fa-tag"></i> cpp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/15/25-cpp-%E6%A8%A1%E6%9D%BF/" rel="prev" title="25-cpp-模板">
+      <i class="fa fa-chevron-left"></i> 25-cpp-模板
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/18/27-linux-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="next" title="27-linux-内存管理">
+      27-linux-内存管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzY2Ni8yNDE2NA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多态"><span class="nav-number">2.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多态的成立条件"><span class="nav-number">2.1.</span> <span class="nav-text">多态的成立条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态的实现原理"><span class="nav-number">2.2.</span> <span class="nav-text">多态的实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vptr指针分布初始化"><span class="nav-number">2.3.</span> <span class="nav-text">vptr指针分布初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚析构函数"><span class="nav-number">2.4.</span> <span class="nav-text">虚析构函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#纯虚函数和抽象类"><span class="nav-number">3.</span> <span class="nav-text">纯虚函数和抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象类模拟接口"><span class="nav-number">3.1.</span> <span class="nav-text">抽象类模拟接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="simonXi"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">simonXi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simonXi-tech" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simonXi-tech" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/simonforfuture" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;simonforfuture" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">simonXi</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">262k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:58</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

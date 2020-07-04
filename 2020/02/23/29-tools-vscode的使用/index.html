@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言vscode官方文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="29-tools-vscode的使用">
+<meta property="og:url" content="http://yoursite.com/2020/02/23/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="simonXi的技术博客">
+<meta property="og:description" content="前言vscode官方文档">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/1.cpp-extension.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/2.file-explorer-mingw.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/7.wsl-task-in-terminal.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/8.wsl-bash-terminal.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/5.build-and-debug-active-file.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/6.command-palette.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/9.intellisense-configurations-wsl.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/1.cpp-extension.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/2.file-explorer-mingw.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/3.build-output-in-terminal.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/4.helloworld-in-terminal.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/5.build-and-debug-active-file.png">
+<meta property="og:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/6.command-palette.png">
+<meta property="article:published_time" content="2020-02-23T05:46:44.000Z">
+<meta property="article:modified_time" content="2020-07-04T04:40:48.930Z">
+<meta property="article:author" content="simonXi">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/1.cpp-extension.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/23/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>29-tools-vscode的使用 | simonXi的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">simonXi的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/simonXi-tech" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/23/29-tools-vscode%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="simonXi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="simonXi的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          29-tools-vscode的使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-23 13:46:44" itemprop="dateCreated datePublished" datetime="2020-02-23T13:46:44+08:00">2020-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-04 12:40:48" itemprop="dateModified" datetime="2020-07-04T12:40:48+08:00">2020-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">vscode官方文档</a><br><a id="more"></a></p>
+<h1 id="vscode-install"><a href="#vscode-install" class="headerlink" title="vscode-install"></a>vscode-install</h1><h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><p>下载<a href="https://go.microsoft.com/fwlink/?LinkID=760868" target="_blank" rel="noopener">.deb package (64-bit)</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install .&#x2F;&lt;file&gt;.deb</span><br></pre></td></tr></table></figure></p>
+<h1 id="vscode-C"><a href="#vscode-C" class="headerlink" title="vscode-C++"></a>vscode-C++</h1><h2 id="GCC-on-Linux"><a href="#GCC-on-Linux" class="headerlink" title="GCC on Linux"></a>GCC on Linux</h2><h3 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h3><ol>
+<li>安装VSCode</li>
+<li>安装C/C++ extension for VS Code。在Extensions视图(Ctrl+Shift+X)中搜索’c++’来安装。<br><img src="/images/29-tools-vscode的使用/1.cpp-extension.png" alt="&quot;1.cpp-extension&quot;"></li>
+</ol>
+<p><strong>确保GCC已经安装</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gcc</span><br><span class="line">sudo apt-get install build-essential gdb</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建Hello-World"><a href="#创建Hello-World" class="headerlink" title="创建Hello World"></a>创建Hello World</h3><p>在终端下，创建一个名为projects的空文件夹，可以在其中放置所有VS代码项目。然后创建一个名为helloworld的子文件夹，导航到其中，通过输入以下命令在该文件夹中打开VS代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir projects</span><br><span class="line">cd projects</span><br><span class="line">mkdir helloworld</span><br><span class="line">cd helloworld</span><br><span class="line">code .</span><br></pre></td></tr></table></figure><br><code>code .</code>命令打开当前工作文件夹中的VS代码，这将成为您的“工作区”。在你浏览教程的过程中，你会看到在工作区的.vscode文件夹中创建的三个文件:</p>
+<ul>
+<li>tasks.json(构建指令)</li>
+<li>launch.json(调试器设置)</li>
+<li>c_cpp_properties.json(编译器路径和智能提示)</li>
+</ul>
+<h3 id="添加源代码文件"><a href="#添加源代码文件" class="headerlink" title="添加源代码文件"></a>添加源代码文件</h3><p>在菜单栏选择File-&gt;New File并命名为helloworld.cpp。<br><img src="/images/29-tools-vscode的使用/2.file-explorer-mingw.png" alt="&quot;2.file-explorer-mingw&quot;"><br>添加源代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;string&gt; msg &#123;&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;from&quot;, &quot;VS Code&quot;, &quot;and the C++ extension!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    for (const string&amp; word : msg)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; word &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="编译helloworld-cpp"><a href="#编译helloworld-cpp" class="headerlink" title="编译helloworld.cpp"></a>编译helloworld.cpp</h3><p>编译需要创建一个tasks.json文件来告诉VS Code如何编译程序。这个任务调用g++编译器来基于源代码创建一个可执行文件。<br>从菜单栏选择 Terminal-&gt;Configure Default Build Task(配置默认生成任务)。在下拉列表会列出c++编译器的各种预定义构建任务。选择g++ build active file。这将会在.vscode文件夹下创建tasks.json文件，并在编辑器中打开。tasks.json的文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">	&quot;tasks&quot;: [</span><br><span class="line">		&#123;</span><br><span class="line">			&quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">			&quot;label&quot;: &quot;C&#x2F;C++: g++ build active file&quot;,</span><br><span class="line">			&quot;command&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;g++&quot;,</span><br><span class="line">			&quot;args&quot;: [</span><br><span class="line">				&quot;-g&quot;,</span><br><span class="line">				&quot;$&#123;file&#125;&quot;,</span><br><span class="line">				&quot;-o&quot;,</span><br><span class="line">				&quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;</span><br><span class="line">			],</span><br><span class="line">			&quot;options&quot;: &#123;</span><br><span class="line">				&quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;problemMatcher&quot;: [</span><br><span class="line">				&quot;$gcc&quot;</span><br><span class="line">			],</span><br><span class="line">			&quot;group&quot;: &#123;</span><br><span class="line">				&quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">				&quot;isDefault&quot;: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>command</code>设置指定要运行的程序，这里是g++。<br><code>args</code>数组指定将传递给g++的命令行参数。这些参数必须按照编译器期望的顺序指定。这个任务告诉g++获取活动文件(${file})，编译它，并在当前目录(${fileDirname})中创建一个与活动文件同名但扩展名的可执行文件，在这个示例中生成helloworld。<br><code>label</code>值是你将在任务列表中看到的值；你可以给它起任何你喜欢的名字。<br><code>isDefault</code>：组对象中的true值指定当你按Ctrl+Shift+B时该任务将会运行。这个属性只是为了方便；如果设置为false，仍然可以在Terminal菜单中运行任务：Run Build Task。</p>
+<p>注意：更多关于task.json的变量信息可以在<a href="https://code.visualstudio.com/docs/editor/variables-reference" target="_blank" rel="noopener">变量引用</a>中查看</p>
+<p><strong>运行构建</strong>:</p>
+<ol>
+<li>回到 helloworld.cpp。</li>
+<li>运行在tasks.json中定义的生成任务，按Ctrl+Shift+B或从菜单栏选择Terminal-&gt;Run Build Task。</li>
+<li>当任务开始时，您应该会看到集成的终端面板出现在源代码编辑器的下面。任务完成后，终端显示编译器的输出，指示构建是成功还是失败。对于一个成功的g++构建，输出如下所示:<br><img src="/images/29-tools-vscode的使用/7.wsl-task-in-terminal.png" alt="&quot;7.wsl-task-in-terminal&quot;"></li>
+<li>使用 + button创建一个新的终端。运行<code>ls</code>就可以看到可执行文件helloworld。<br><img src="/images/29-tools-vscode的使用/8.wsl-bash-terminal.png" alt="&quot;8.wsl-bash-terminal&quot;"></li>
+</ol>
+<h3 id="调试helloworld-cpp"><a href="#调试helloworld-cpp" class="headerlink" title="调试helloworld.cpp"></a>调试helloworld.cpp</h3><p>调试程序(F5)需要创建一个launch.json文件来配置VS Code启动GDB调试器。从菜单栏中选择 Run-&gt;Add Configuration…(添加配置…)，然后选择C++(GDB/LLDB)。<br>然后您将看到各种预定义调试配置的下拉列表。选择g++-build and debug active file。<br><img src="/images/29-tools-vscode的使用/5.build-and-debug-active-file.png" alt="&quot;5.build-and-debug-active-file&quot;"></p>
+<p>VS Code创建一个launch.json文件，在编辑器中打开，构建并运行’helloworld’。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 使用 IntelliSense 了解相关属性。 </span><br><span class="line">    &#x2F;&#x2F; 悬停以查看现有属性的描述。</span><br><span class="line">    &#x2F;&#x2F; 欲了解更多信息，请访问: https:&#x2F;&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?linkid&#x3D;830387</span><br><span class="line">    &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;g++ - 生成和调试活动文件&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">            &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">            &quot;program&quot;: &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;,</span><br><span class="line">            &quot;args&quot;: [],</span><br><span class="line">            &quot;stopAtEntry&quot;: false,</span><br><span class="line">            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">            &quot;environment&quot;: [],</span><br><span class="line">            &quot;externalConsole&quot;: false,</span><br><span class="line">            &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;setupCommands&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;description&quot;: &quot;为 gdb 启用整齐打印&quot;,</span><br><span class="line">                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">                    &quot;ignoreFailures&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;preLaunchTask&quot;: &quot;C&#x2F;C++: g++ build active file&quot;,</span><br><span class="line">            &quot;miDebuggerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gdb&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>program</code>设置指定要调试的程序。在这里它被设置为活动文件夹${fileDirname}和无扩展名的活动文件名${fileBasenameNoExtension}。如果helloworld.cpp是活动文件，它将是helloworld。<br>默认情况下，c++扩展不会向源代码添加任何断点，并且stopAtEntry值设置为false。将stopAtEntry值更改为true，以便在开始调试时使调试器在主方法上停止。</p>
+<p><strong>启动调试会话</strong>：</p>
+<ol>
+<li>回到helloworld.cpp，使其成为活动文件。</li>
+<li>按F5或从主菜单中选择 run&gt;Start Debugging。</li>
+</ol>
+<h3 id="C-C-配置"><a href="#C-C-配置" class="headerlink" title="C/C++配置"></a>C/C++配置</h3><p>如果想对C/C++扩展进行更多的控制，可以创建一个c_cpp_properties.json文件。这个文件允许你修改如编译器路径，包括路径、c++标准(默认c++17)等设置。可以通过从命令面板(Ctrl+Shift+P)运行命令：C/C++ Edit Configurations(UI)来查看C/C++配置。<br><img src="/images/29-tools-vscode的使用/6.command-palette.png" alt="&quot;6.command-palette&quot;">。<br>这会打开C/C++ Configuration页面。当你修改这个文件，VS Code会将这些内容写入.vscode文件夹下的c_cpp_properties.json。</p>
+<p><img src="/images/29-tools-vscode的使用/9.intellisense-configurations-wsl.png" alt="&quot;9.intellisense-configurations-wsl.&quot;"><br>如果你的程序包含不在你的工作区或者标准库路径下的头文件，你只需要修改<strong>include path</strong>设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;Linux&quot;,</span><br><span class="line">            &quot;includePath&quot;: [</span><br><span class="line">                &quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;defines&quot;: [],</span><br><span class="line">            &quot;compilerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;clang&quot;,</span><br><span class="line">            &quot;cStandard&quot;: &quot;c11&quot;,</span><br><span class="line">            &quot;cppStandard&quot;: &quot;c++14&quot;,</span><br><span class="line">            &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;version&quot;: 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>VS代码现在配置为在Linux上使用gcc。配置应用于当前工作区。要重用配置，只需将JSON文件复制到新项目文件夹(工作区)中的.vscode文件夹中，并根据需要更改源文件和可执行文件的名称。</p>
+<h2 id="GCC-on-Windows"><a href="#GCC-on-Windows" class="headerlink" title="GCC on Windows"></a>GCC on Windows</h2><p>配置VSCode使用Mingw-64中的GCC C++编译器和GDB调试器在Windows上运行程序。</p>
+<h3 id="先决条件-1"><a href="#先决条件-1" class="headerlink" title="先决条件"></a>先决条件</h3><ol>
+<li>安装VSCode</li>
+<li>安装C/C++ extension for VS Code。在Extensions视图(Ctrl+Shift+X)中搜索’c++’来安装。<br><img src="/images/29-tools-vscode的使用/1.cpp-extension.png" alt="&quot;1.cpp-extension&quot;"></li>
+<li>通过Source Forge安装Mingw-64。单击<a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download" target="_blank" rel="noopener">Mingw-64</a>开始下载在线安装程序。注意，在线安装的方法需要VPN。如果无法在线安装，可以到Source Forge的<a href="https://sourceforge.net/projects/mingw-w64/files/" target="_blank" rel="noopener">Mingw页面</a>下载对应的离线安装包，然后将离线安装包解压。这里我将解压文件夹中的mingw64文件夹安装到C:\mingw-w64文件夹下。</li>
+<li>将Mingw-w64 bin 文件夹添加到环境变量中<ul>
+<li>在搜索栏输入 此电脑，右键属性。点击 高级系统设置，选择高级选项卡。</li>
+<li>点击环境变量。选择系统变量-&gt;Path变量-&gt;编辑，添加mingw64的bin目录到环境变量。<br>比如：c:\mingw-w64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin。</li>
+</ul>
+</li>
+<li>检测MinGW的安装<br>打开cmd，输入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ --version</span><br><span class="line">gdb --version</span><br></pre></td></tr></table></figure>
+如果有输出，表示安装成功。</li>
+</ol>
+<h3 id="创建Hello-World-1"><a href="#创建Hello-World-1" class="headerlink" title="创建Hello World"></a>创建Hello World</h3><p>在Windows命令提示符下，创建一个名为projects的空文件夹，可以在其中放置所有VS代码项目。然后创建一个名为helloworld的子文件夹，导航到其中，通过输入以下命令在该文件夹中打开VS代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir projects</span><br><span class="line">cd projects</span><br><span class="line">mkdir helloworld</span><br><span class="line">cd helloworld</span><br><span class="line">code .</span><br></pre></td></tr></table></figure><br><code>code .</code>命令打开当前工作文件夹中的VS代码，这将成为您的“工作区”。在你浏览教程的过程中，你会看到在工作区的.vscode文件夹中创建的三个文件:</p>
+<ul>
+<li>tasks.json(构建指令)</li>
+<li>launch.json(调试器设置)</li>
+<li>c_cpp_properties.json(编译器路径和智能提示)</li>
+</ul>
+<h3 id="添加源代码文件-1"><a href="#添加源代码文件-1" class="headerlink" title="添加源代码文件"></a>添加源代码文件</h3><p>在菜单栏选择File-&gt;New File并命名为helloworld.cpp。<br><img src="/images/29-tools-vscode的使用/2.file-explorer-mingw.png" alt="&quot;2.file-explorer-mingw&quot;"><br>添加源代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;string&gt; msg &#123;&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;from&quot;, &quot;VS Code&quot;, &quot;and the C++ extension!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    for (const string&amp; word : msg)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; word &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="编译helloworld-cpp-1"><a href="#编译helloworld-cpp-1" class="headerlink" title="编译helloworld.cpp"></a>编译helloworld.cpp</h3><p>编译需要创建一个tasks.json文件来告诉VS Code如何编译程序。这个任务调用g++编译器来基于源代码创建一个可执行文件。<br>从菜单栏选择 Terminal-&gt;Configure Default Build Task。在下拉列表会列出c++编译器的各种预定义构建任务。选择g++.exe build active file。这将会在.vscode文件夹下创建tasks.json文件，并在编辑器中打开。tasks.json的文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">	&quot;tasks&quot;: [</span><br><span class="line">		&#123;</span><br><span class="line">			&quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">			&quot;label&quot;: &quot;C&#x2F;C++: g++.exe build active file&quot;,</span><br><span class="line">			&quot;command&quot;: &quot;C:\\mingw-w64\\x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0\\mingw64\\bin\\g++.exe&quot;,</span><br><span class="line">			&quot;args&quot;: [</span><br><span class="line">				&quot;-g&quot;,</span><br><span class="line">				&quot;$&#123;file&#125;&quot;,</span><br><span class="line">				&quot;-o&quot;,</span><br><span class="line">				&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span><br><span class="line">			],</span><br><span class="line">			&quot;options&quot;: &#123;</span><br><span class="line">				&quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;</span><br><span class="line">			&#125;,</span><br><span class="line">			&quot;problemMatcher&quot;: [</span><br><span class="line">				&quot;$gcc&quot;</span><br><span class="line">			],</span><br><span class="line">			&quot;group&quot;: &#123;</span><br><span class="line">				&quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">				&quot;isDefault&quot;: true</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>command</code>设置指定要运行的程序，这里是g++。<br><code>args</code>数组指定将传递给g++的命令行参数。这些参数必须按照编译器期望的顺序指定。这个任务告诉g++获取活动文件(${file})，编译它，并在当前目录(${fileDirname})中创建一个与活动文件同名但扩展名为.exe的可执行文件，在这个示例中生成helloworld.exe。<br><code>label</code>值是你将在任务列表中看到的值；你可以给它起任何你喜欢的名字。<br><code>isDefault</code>：组对象中的true值指定当你按Ctrl+Shift+B时该任务将会运行。这个属性只是为了方便；如果设置为false，仍然可以在Terminal菜单中运行任务：Run Build Task。</p>
+<p>注意：更多关于task.json的变量信息可以在<a href="https://code.visualstudio.com/docs/editor/variables-reference" target="_blank" rel="noopener">变量引用</a>中查看</p>
+<p><strong>运行构建</strong>:</p>
+<ol>
+<li>回到 helloworld.cpp。</li>
+<li>运行在tasks.json中定义的生成任务，按Ctrl+Shift+B或从菜单栏选择Terminal-&gt;Run Build Task。</li>
+<li>当任务开始时，您应该会看到集成的终端面板出现在源代码编辑器的下面。任务完成后，终端显示编译器的输出，指示构建是成功还是失败。对于一个成功的g++构建，输出如下所示:<br><img src="/images/29-tools-vscode的使用/3.build-output-in-terminal.png" alt="&quot;3.build-output-in-terminal&quot;"></li>
+<li>使用 + button创建一个新的终端。运行<code>dir</code>就可以看到可执行文件helloworld.exe。<br><img src="/images/29-tools-vscode的使用/4.helloworld-in-terminal.png" alt="&quot;4.helloworld-in-terminal&quot;"></li>
+</ol>
+<p>注意：运行时可能没有输出。原因在于g++编译运行时出现：无法定位程序输入点__gxx_personality_v0 问题。<br><a href="https://blog.csdn.net/lushuchengsky/article/details/78002565" target="_blank" rel="noopener">解决方法</a></p>
+<p><strong>4种解决方法</strong>：</p>
+<ol>
+<li>使用-static 编译[g++ -static file.cpp]</li>
+<li>删除掉其他含有libstdc++-6.dll 的PATH环境变量，只留下mingw的</li>
+<li>将 libstdc++-6.dll 文件与代码放置同一文件编译</li>
+<li>将 libstdc++-6.dll 文件放到System32(博主尝试这个有效)或SysWOW64文件夹下。  [这个比较方便]</li>
+</ol>
+<h3 id="调试helloworld-cpp-1"><a href="#调试helloworld-cpp-1" class="headerlink" title="调试helloworld.cpp"></a>调试helloworld.cpp</h3><p>调试程序(F5)需要创建一个launch.json文件来配置VS Code启动GDB调试器。从菜单栏中选择 Run-&gt;Add Configuration…，然后选择C++(GDB/LLDB)。<br>然后您将看到各种预定义调试配置的下拉列表。选择g++.exe-生成和调试活动文件。<br><img src="/images/29-tools-vscode的使用/5.build-and-debug-active-file.png" alt="&quot;5.build-and-debug-active-file&quot;"></p>
+<p>VS Code创建一个launch.json文件，在编辑器中打开，构建并运行’helloworld’。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; Use IntelliSense to learn about possible attributes.</span><br><span class="line">    &#x2F;&#x2F; Hover to view descriptions of existing attributes.</span><br><span class="line">    &#x2F;&#x2F; For more information, visit: https:&#x2F;&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?linkid&#x3D;830387</span><br><span class="line">    &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;g++.exe - 生成和调试活动文件&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">            &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">            &quot;program&quot;: &quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;,</span><br><span class="line">            &quot;args&quot;: [],</span><br><span class="line">            &quot;stopAtEntry&quot;: false,</span><br><span class="line">            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">            &quot;environment&quot;: [],</span><br><span class="line">            &quot;externalConsole&quot;: false,</span><br><span class="line">            &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;miDebuggerPath&quot;: &quot;C:\\mingw-w64\\x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0\\mingw64\\bin\\gdb.exe&quot;,</span><br><span class="line">            &quot;setupCommands&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;description&quot;: &quot;为 gdb 启用整齐打印&quot;,</span><br><span class="line">                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">                    &quot;ignoreFailures&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;preLaunchTask&quot;: &quot;C&#x2F;C++: g++.exe build active file&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>program</code>设置指定要调试的程序。在这里它被设置为活动文件夹${fileDirname}和扩展名为.exe的活动文件名${fileBasenameNoExtension}。如果helloworld.cpp是活动文件，它将是helloworld.exe。<br>默认情况下，c++扩展不会向源代码添加任何断点，并且stopAtEntry值设置为false。将stopAtEntry值更改为true，以便在开始调试时使调试器在主方法上停止。</p>
+<p><strong>启动调试会话</strong>：</p>
+<ol>
+<li>回到helloworld.cpp，使其成为活动文件。</li>
+<li>按F5或从主菜单中选择 run&gt;Start Debugging。</li>
+</ol>
+<h3 id="C-C-配置-1"><a href="#C-C-配置-1" class="headerlink" title="C/C++配置"></a>C/C++配置</h3><p>如果想对C/C++扩展进行更多的控制，可以创建一个c_cpp_properties.json文件。这个文件允许你修改如编译器路径，包括路径、c++标准(默认c++17)等设置。可以通过从命令面板(Ctrl+Shift+P)运行命令：C/C++ Edit Configurations(UI)来查看C/C++配置。<br><img src="/images/29-tools-vscode的使用/6.command-palette.png" alt="&quot;6.command-palette&quot;">。<br>这会打开C/C++ Configuration页面。当你修改这个文件，VS Code会将这些内容写入.vscode文件夹下的c_cpp_properties.json。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;Win32&quot;,</span><br><span class="line">            &quot;includePath&quot;: [</span><br><span class="line">                &quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;defines&quot;: [</span><br><span class="line">                &quot;_DEBUG&quot;,</span><br><span class="line">                &quot;UNICODE&quot;,</span><br><span class="line">                &quot;_UNICODE&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;windowsSdkVersion&quot;: &quot;10.0.17763.0&quot;,</span><br><span class="line">            &quot;compilerPath&quot;: &quot;C:&#x2F;mingw-w64&#x2F;x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0&#x2F;mingw64&#x2F;bin&#x2F;g++.exe&quot;,</span><br><span class="line">            &quot;cStandard&quot;: &quot;c11&quot;,</span><br><span class="line">            &quot;cppStandard&quot;: &quot;c++17&quot;,</span><br><span class="line">            &quot;intelliSenseMode&quot;: &quot;clang-x86&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;version&quot;: 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>只有当程序包含的头文件不在工作区或在标准库路径中时，才需要添加到Include path数组设置中。</p>
+<p>compilerPath设置是配置中的一个重要设置。扩展使用它来推断c++标准库头文件的路径。当扩展知道在哪里找到这些文件时，它可以提供像智能补全这样的有用特性，并进入定义导航。</p>
+<p>C/C++扩展尝试根据在系统上找到的默认编译器来填充compilerPath。该扩展在几个常见的编译器位置查找。<br>compilerPath搜索顺序为：</p>
+<ul>
+<li>首先检查Microsoft Visual C++编译器</li>
+<li>然后在Windows Linux子系统(WSL)上寻找g++</li>
+<li>然后Mingw-w64 g++</li>
+</ul>
+<p>如果你安装了Visual Studio或WSL，你可能需要更改compilerPath以匹配项目的首选编译器。例如，如果您在C:\ Mingw-w64下安装Mingw-w64版本8.1.0，使用Win32线程和SEH异常处理选项，路径将是这样的:C: Mingw-w64 \x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin\g++.exe。注意：此时intelliSenseMode要修改为：”clang-x86”。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文略去了调试的部分内容，详细查看VS Code原文。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>打赏，你怕了么(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="simonXi 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="simonXi 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"><i class="fa fa-tag"></i> tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/19/28-leetcode-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="prev" title="28-leetcode-滑动窗口">
+      <i class="fa fa-chevron-left"></i> 28-leetcode-滑动窗口
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/24/30-tools-sourceInsight%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="30-tools-sourceInsight的使用">
+      30-tools-sourceInsight的使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzY2Ni8yNDE2NA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vscode-install"><span class="nav-number">2.</span> <span class="nav-text">vscode-install</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux"><span class="nav-number">2.1.</span> <span class="nav-text">linux</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vscode-C"><span class="nav-number">3.</span> <span class="nav-text">vscode-C++</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-on-Linux"><span class="nav-number">3.1.</span> <span class="nav-text">GCC on Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先决条件"><span class="nav-number">3.1.1.</span> <span class="nav-text">先决条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Hello-World"><span class="nav-number">3.1.2.</span> <span class="nav-text">创建Hello World</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加源代码文件"><span class="nav-number">3.1.3.</span> <span class="nav-text">添加源代码文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译helloworld-cpp"><span class="nav-number">3.1.4.</span> <span class="nav-text">编译helloworld.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试helloworld-cpp"><span class="nav-number">3.1.5.</span> <span class="nav-text">调试helloworld.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-C-配置"><span class="nav-number">3.1.6.</span> <span class="nav-text">C&#x2F;C++配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-on-Windows"><span class="nav-number">3.2.</span> <span class="nav-text">GCC on Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先决条件-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">先决条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Hello-World-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">创建Hello World</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加源代码文件-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">添加源代码文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译helloworld-cpp-1"><span class="nav-number">3.2.4.</span> <span class="nav-text">编译helloworld.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试helloworld-cpp-1"><span class="nav-number">3.2.5.</span> <span class="nav-text">调试helloworld.cpp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-C-配置-1"><span class="nav-number">3.2.6.</span> <span class="nav-text">C&#x2F;C++配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="simonXi"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">simonXi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simonXi-tech" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simonXi-tech" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/simonforfuture" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;simonforfuture" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">simonXi</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">262k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:58</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>

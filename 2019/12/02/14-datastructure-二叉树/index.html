@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="14-datastructure-二叉树">
+<meta property="og:url" content="http://yoursite.com/2019/12/02/14-datastructure-%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+<meta property="og:site_name" content="simonXi的技术博客">
+<meta property="og:description" content="前言">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/14-datastructure-%E4%BA%8C%E5%8F%89%E6%A0%91/01-%E4%BA%8C%E5%8F%89%E6%A0%91.png">
+<meta property="article:published_time" content="2019-12-02T05:28:58.000Z">
+<meta property="article:modified_time" content="2020-07-04T04:04:50.903Z">
+<meta property="article:author" content="simonXi">
+<meta property="article:tag" content="二叉树">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/14-datastructure-%E4%BA%8C%E5%8F%89%E6%A0%91/01-%E4%BA%8C%E5%8F%89%E6%A0%91.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/02/14-datastructure-%E4%BA%8C%E5%8F%89%E6%A0%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>14-datastructure-二叉树 | simonXi的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">simonXi的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/simonXi-tech" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/02/14-datastructure-%E4%BA%8C%E5%8F%89%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="simonXi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="simonXi的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          14-datastructure-二叉树
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-02 13:28:58" itemprop="dateCreated datePublished" datetime="2019-12-02T13:28:58+08:00">2019-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-04 12:04:50" itemprop="dateModified" datetime="2020-07-04T12:04:50+08:00">2020-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%9F%A5%E6%89%BE/" itemprop="url" rel="index"><span itemprop="name">查找</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><a id="more"></a>
+<h1 id="二叉排序-搜索-树-BST树"><a href="#二叉排序-搜索-树-BST树" class="headerlink" title="二叉排序(搜索)树(BST树)"></a>二叉排序(搜索)树(BST树)</h1><p>树是N(N≥0)个结点的有限集合，N=0时，称为空树。在任意一棵非空树中应满足：</p>
+<ul>
+<li>有且仅有一个特定的称为根的结点</li>
+<li>当N&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集合，其中每一个集合本身又是一棵树，并且成为根结点的子树。</li>
+</ul>
+<p>由上可知，树的定义是递归的，是一种递归的数据结构。树作为一种逻辑结构，同时也是一种分层结构，具有以下两个特点：</p>
+<ul>
+<li>树的根结点没有前驱结点，除根结点之外的所有结点有且只有一个前驱结点。</li>
+<li>树中所有结点可以有零个或者多个后继结点。</li>
+</ul>
+<p>树适合表示具有层次结构的数据。树中的某个结点(除根结点外)最多只和上一层的一个结点(即其父节点)有直接关系，根结点没有上层结点。因此在n个结点的树中有n-1条边。而树中每个结点与其下一层的零个或者多个结点(即其子女结点)有直接关系。</p>
+<p>树中一个结点的子结点个数称为该结点的度，树中结点的最大度数称为树的度。</p>
+<p>二叉树是每个结点至多只有两棵子树(即二叉树中不存在度大于2的结点)，二叉树的子树有左右之分，其次序不能颠倒。</p>
+<p><img src="/images/14-datastructure-二叉树/01-二叉树.png" alt="&quot;01-二叉树&quot;"></p>
+<p>二叉树是有序树，若将其左右子树颠倒，就成为另一棵不同的二叉树。特殊的二叉树包括：满二叉树，完全二叉树，二叉排序树(BST)，平衡二叉树(AVL)，红黑树等。    </p>
+<p>二叉树与度为2的有序树的区别：</p>
+<ul>
+<li>度为2的树至少有3个结点，而二叉树可以为空；</li>
+<li>度为2的有序树的孩子结点的左右次序是相对于另一个孩子结点的，如果某个结点只有一个孩子结点，这个孩子结点无须区分其左右次序。而二叉树需要区分左右次序。</li>
+</ul>
+<p>二叉树可以采用顺序存储结构，也可以采用链式存储结构。对于满二叉树和完全二叉树，采用顺序存储空间利用率高，而且可以根据数组下标反映二叉树中结点之间的逻辑关系。<br>但是对于一般的二叉树，为使数组下标反映二叉树中结点之间的逻辑关系，只能添加一些并不存在的空结点让其每个结点与完全二叉树上的结点相对照，在存储到一维数组的相应分量中，这样的空间利用率不高。<br>二叉树更通用的方式是采用链式存储结构。链式结构指用一个链表来存储一棵二叉树，二叉树中每一个结点用链表的一个链接点来存储。在二叉树中，结点结构通常包括若干数据域和若干指针域。二叉链表至少包含3个域：数据域data、左指针域lchild和右指针域rchild。如果用二叉树存储字典数据结构，此时数据域包括key-value。</p>
+<ul>
+<li>堆和二叉树的区别：<br>以小根堆为例，堆的特点是双亲结点的关键字必然小于等于孩子结点的关键字，而两个孩子结点的关键字没有次序规定，而二叉排序数中，每个双亲结点的关键字均大于左子树结点的关键字，均小于右子树j结点的关键字，也就是说，每个双亲结点的左右孩子的关键字有次序关系，这样，当对两种树执行中序遍历后，二叉树会得到一个有序的序列，而堆不一定。</li>
+</ul>
+<h2 id="二叉排序-搜索-树的遍历"><a href="#二叉排序-搜索-树的遍历" class="headerlink" title="二叉排序(搜索)树的遍历"></a>二叉排序(搜索)树的遍历</h2><p>二叉树的遍历，是指按某条搜索路径访问树中的每个结点，使得每个结点均被访问一次，而且仅被访问一次。由二叉树的递归定义，遍历一棵二叉树便要决定对根结点(N)、左子树(L)、右子树(R)的访问顺序。按照先遍历左子树再遍历右子树的原则，常见的遍历次序有先序(NLR)、中序(LNR)和后序(LRN)三种。<font color="red">其中，序指的是根结点在何时被访问</font>。</p>
+<p>先序遍历方式也可以认为是深度优先遍历方式。深度优先遍历方式的基本思想如下：首先访问图中某一起始顶点v,然后由v出发，访问与v邻接且未被访问的任一顶点$w_1$，再访问与$w_1$邻接且未被访问的任一顶点$w_2$，…，重复上述过程。当不能再继续向下访问时，依次退回到最近被访问的顶点，若它还有邻接顶点未被访问过，则从该点开始继续上述搜索过程，直到图中所有顶点均被访问过为止。</p>
+<h3 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h3><p>先序遍历操作过程：<br>如果二叉树为空，什么也不做。否则：</p>
+<ul>
+<li>访问根结点</li>
+<li>先序遍历左子树</li>
+<li>先序遍历右子树</li>
+</ul>
+<h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><p>中序遍历操作过程：<br>如果二叉树为空，什么也不做。否则：</p>
+<ul>
+<li>中序遍历左子树</li>
+<li>访问根结点</li>
+<li>中序遍历右子树</li>
+</ul>
+<h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3><p>后序遍历操作过程：<br>如果二叉树为空，什么也不做。否则：</p>
+<ul>
+<li>后序遍历左子树</li>
+<li>后序遍历右子树</li>
+<li>访问根结点</li>
+</ul>
+<p>三种遍历算法中递归遍历左右子树的顺序都是固定的，只是访问根结点的顺序不同。不管采用那种遍历算法，每个结点都访问一次且仅访问一次，故时间复杂度都是O(n)。</p>
+<h2 id="二叉排序-搜索-树的查找与删除"><a href="#二叉排序-搜索-树的查找与删除" class="headerlink" title="二叉排序(搜索)树的查找与删除"></a>二叉排序(搜索)树的查找与删除</h2><h3 id="最大值和最小值"><a href="#最大值和最小值" class="headerlink" title="最大值和最小值"></a>最大值和最小值</h3><p>二叉树的最小值是左子树最左侧分支中没有左孩子的结点。<br>二叉树的最大值是右子树最右侧分支中没有右孩子的结点。</p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ol>
+<li>如果被删除结点是叶结点，则直接删除。</li>
+<li>如果被删除结点Z只有一棵左子树或右子树，则让Z的子树称为Z父结点的子树，代替Z的位置。</li>
+<li>如果被删除结点Z有左、右两棵子树，则令Z的直接后继(或者直接前驱)替代Z，然后从二叉树中删除这个直接后继(或直接前驱)，这样就转换成了第一或第二种情况。<br>直接后继就是删除结点右子树中的最小值；直接前驱就是删除结点左子树中的最大值。</li>
+</ol>
+<h2 id="二叉树的其他操作"><a href="#二叉树的其他操作" class="headerlink" title="二叉树的其他操作"></a>二叉树的其他操作</h2><h3 id="ceil和floor"><a href="#ceil和floor" class="headerlink" title="ceil和floor"></a>ceil和floor</h3><h3 id="rank和ceil"><a href="#rank和ceil" class="headerlink" title="rank和ceil"></a>rank和ceil</h3>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>打赏，你怕了么(●ˇ∀ˇ●)</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="simonXi 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="simonXi 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 二叉树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/01/13-datastructure-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="prev" title="13-datastructure-二分查找">
+      <i class="fa fa-chevron-left"></i> 13-datastructure-二分查找
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/03/15-datastructure-%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="next" title="15-datastructure-并查集">
+      15-datastructure-并查集 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzY2Ni8yNDE2NA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二叉排序-搜索-树-BST树"><span class="nav-number">2.</span> <span class="nav-text">二叉排序(搜索)树(BST树)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉排序-搜索-树的遍历"><span class="nav-number">2.1.</span> <span class="nav-text">二叉排序(搜索)树的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先序遍历"><span class="nav-number">2.1.1.</span> <span class="nav-text">先序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中序遍历"><span class="nav-number">2.1.2.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后序遍历"><span class="nav-number">2.1.3.</span> <span class="nav-text">后序遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉排序-搜索-树的查找与删除"><span class="nav-number">2.2.</span> <span class="nav-text">二叉排序(搜索)树的查找与删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最大值和最小值"><span class="nav-number">2.2.1.</span> <span class="nav-text">最大值和最小值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.2.2.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的其他操作"><span class="nav-number">2.3.</span> <span class="nav-text">二叉树的其他操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ceil和floor"><span class="nav-number">2.3.1.</span> <span class="nav-text">ceil和floor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rank和ceil"><span class="nav-number">2.3.2.</span> <span class="nav-text">rank和ceil</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="simonXi"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">simonXi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simonXi-tech" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simonXi-tech" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/simonforfuture" title="https:&#x2F;&#x2F;blog.csdn.net&#x2F;simonforfuture" rel="noopener" target="_blank">CSDN</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">Bilibili</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">simonXi</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">262k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:58</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
